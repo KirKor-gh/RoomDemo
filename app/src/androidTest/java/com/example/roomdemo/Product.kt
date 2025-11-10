@@ -1,17 +1,20 @@
 package com.example.roomdemo
 
-import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-@Dao
-interface ProductDao {
-    @Insert
-    fun insertProduct(product: Product)
-    @Query("SELECT * FROM products WHERE productName = :name")
-    fun findProduct(name: String): List<Product>
-    @Query("DELETE FROM products WHERE productName = :name")
-    fun deleteProduct(name: String)
-    @Query("SELECT * FROM products")
-    fun getAllProducts(): LiveData<List<Product>>
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "products")
+class Product {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "productId")
+    var id: Int = 0
+    @ColumnInfo(name = "productName")
+    var productName: String = ""
+    var quantity: Int = 0
+    constructor()
+    constructor(productname: String, quantity: Int) {
+        this.productName = productname
+        this.quantity = quantity
+    }
 }
